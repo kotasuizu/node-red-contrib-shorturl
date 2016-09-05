@@ -1,0 +1,91 @@
+<!--
+  Copyright (c) 2016 Kota Suizu
+  Released under the MIT license
+  http://opensource.org/licenses/mit-license.php
+-->
+
+<script type="text/x-red" data-template-name="shorturl-config">
+    <div class="form-row">
+        <label for="node-config-input-key"><i class="fa fa-lock"></i> API Key</label>
+        <input type="password" id="node-config-input-key">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('shorturl-config', {
+        category: "config",
+        color: "rgb(114, 199, 231)",
+        defaults: {
+            name: {
+                value: ""
+            }
+        },
+        credentials: {
+            key: {
+                type: "password",
+                required: true
+            }
+        },
+        label: function() {
+            return this.name;
+        }
+    });
+</script>
+
+
+
+<script type="text/x-red" data-template-name="ShortURL">
+    <div class="form-row">
+        <label for="node-input-shorturlconfig"><i class="fa fa-globe"></i> API Key</label>
+        <input type="text" id="node-input-shorturlconfig">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ShortURL">
+    <p>To convert to shorten URL using the Google service.</p>
+    <p>
+        The input message contains the following properties:
+        <ul>
+            <li>Set the original URL to <code>msg.payload</code>.</li>
+        </ul>
+    </p>
+    <p>
+        The output message contains the following properties:
+        <ul>
+            <li>The shorten URL is output to the <code>msg.payload</code>.</li>
+        </ul>
+    </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('ShortURL', {
+        category: 'function',
+        defaults: {
+            name: {
+                value: ""
+            },
+            shorturlconfig: {
+                type: "shorturl-config",
+                required: true
+            }
+        },
+        color: "#00A0E2",
+        inputs: 1,
+        outputs: 1,
+        icon: "small.svg",
+        label: function() {
+            return this.name || "ShortURL";
+        },
+        labelStyle: function() {
+            return this.name ? "node_label_italic" : "";
+        }
+    });
+</script>
